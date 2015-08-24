@@ -1,0 +1,14 @@
+package frigg
+
+opts = "-p effects -p containers -p lightyear --typeintype -p argparse -p xml -p read -p config"
+
+modules = Frigg.Options
+        , Frigg.Error
+        , Frigg.Effs
+        , Frigg.Convert
+        , Frigg.Schema
+        , Frigg.Eval
+        , Frigg.Main
+
+executable = frigg
+main = Frigg.Main
