@@ -72,7 +72,7 @@ calcTemplateAdherence ws gsc doc =
   where
     score : String -> Float
     score k' =
-      case queryDoc (toLower k' ++ "/@score") doc of
+      case query (toLower k' ++ "/@score") doc of
         Left err => 0.0
         Right xs => case getText xs of
           Nil     => 0.0

@@ -13,8 +13,14 @@ data FriggError : Type where
   MissingFile       : String -> FriggError
   MalformedPattern  : FriggError
   InvalidMapping    : FriggError
+  PatternDocMissing : FriggError
+  NoSuchCommand     : FriggError
+  ParseError        : String -> FriggError
+  GeneralError      : String -> FriggError
 
 instance Show FriggError where
+  show NoSuchCommand     = "Command Not Recognised"
+  show PatternDocMissing = "External Document needs to be specified."
   show NoModeSpecified   = "No Mode Specified"
   show NoFormatSpecified = "No output format specified"
   show FeatureNotImpl    = "Feature Not Implemented"
@@ -22,6 +28,8 @@ instance Show FriggError where
   show InvalidMapping    = "Mappings must be greater than zero"
   show FileExpected      = "File Expected"
 
-  show (MissingFile fn)  = unwords ["Missing file:",fn]
+  show (GeneralError msg) = unwords ["General Error", msg]
+  show (MissingFile fn)   = unwords ["Missing file:", fn]
+  show (ParseError  msg)  = unlines ["Parse Error:", msg]
 
 -- --------------------------------------------------------------------- [ EOF ]

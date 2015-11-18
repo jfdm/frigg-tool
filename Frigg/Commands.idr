@@ -6,39 +6,39 @@
 module Frigg.Commands
 
 import Lightyear
+import Lightyear.Char
 import Lightyear.Strings
+
+import Freyja.Convert
 
 %access public
 
-literallyBetweenLR : Char -> Char -> Parser String
-literallyBetweenLR l r =
-    map pack $ between (lexeme $ char l) (lexeme $ char r) (some (satisfy (/= r)))
-
-literallyBetween : Char -> Parser String
-literallyBetween c = literallyBetweenLR c c
-
 word : Parser String
-word = lexeme (map pack $ some (satisfy isAlphaNum) ) <?> "Identity"
+word = lexeme (map pack $ some (alphaNum) ) <?> "Identity"
 
 -- ---------------------------------------------------------------- [ Commands ]
 
-data DisplayPattern : Type where
-  All      : DisplayPattern
-  Outline  : DisplayPattern
-  Metadata : DisplayPattern
-  Heading  : String -> DisplayPattern
+data DisplayPattern = All
+                    | Summary
+                    | MData
+                    | Context
+                    | Problem
+                    | Solution
+                    | Evidence
+                    | Studies
+                    | Related
 
 data EvalPattern : Type where
   Readability : EvalPattern
   TemplateAd  : EvalPattern
-  SolutionApp : EvalPattern
+--  SolutionApp : EvalPattern
   SifModel    : EvalPattern
 
 public
 data FriggCMD : Type where
-  Display : DisplayPattern -> FriggCMD
-  Convert : ConvPattern    -> FriggCMD
-  Eval    : EvalPattern    -> FriggCMD
+  Display : DisplayPattern  -> FriggCMD
+  Convert : FreyjaOutFormat -> FriggCMD
+  Eval    : EvalPattern     -> FriggCMD
   Quit : FriggCMD
   Help : FriggCMD
 
@@ -46,7 +46,16 @@ showHelp : String
 showHelp = """
 Command                 | Description
 ------------------------|-------------------------------------------------------
-
+:display <what>         | Display part of the pattern. One Of:
+                        | [ all, info, metadata, context, problem,
+                        |   solution, evidence, studies, related]
+                        |
+:evaluate <what>        | Perform an evaluation. One of:
+                        | [sif, read, template]
+                        |
+:convert <to>           | Convert to a valid out format: One of:
+                        | [latex, org, markdown, xml ]
+                        |
 :quit :q :exit          | Quit the repl
 :? :help                | Show this help
 """
@@ -56,23 +65,21 @@ display : Parser FriggCMD
 display = do
       string ":display"
       space
-      opts <- displayOpts
-      case opts of
-        Just x  => pure $ Display x
-        Nothing => (satisfy False)
+      o <- displayOpts
+      pure $ Display o
     <?> "Display"
   where
-    heading : Parser (Maybe DisplayPattern)
-    heading = do
-      w <- word
-      pure $ (Just $ Heading w)
+    displayOpts : Parser (DisplayPattern)
+    displayOpts = (string "all"      *> return All)
+              <|> (string "info"     *> return Summary)
+              <|> (string "metadata" *> return MData)
+              <|> (string "context"  *> return Context)
+              <|> (string "problem"  *> return Problem)
+              <|> (string "solution" *> return Solution)
+              <|> (string "evidence" *> return Evidence)
+              <|> (string "studies"  *> return Studies)
+              <|> (string "related"  *> return Related)
 
-    displayOpts : Parser (Maybe DisplayPattern)
-    displayOpts = (string "all"     *> pure $ Just All)
-              <|> (string "outline" *> pure $ Just Outline)
-              <|> (string "info"    *> pure $ Just Metadata)
-              <|> heading
-              <|> pure Nothing
 
 private
 convert : Parser FriggCMD
@@ -80,13 +87,14 @@ convert = do
     string ":convert"
     space
     fmt <- format
-    case fmt of
-      Just f  => pure $ ConvPattern fmt
-      Nothing => (satisfy False)
+    pure $ Convert fmt
   where
-    format : Parser (Maybe ConvPattern)
-    format = (string "" *> pure $ Just )
-         <|> pure Nothing
+    format : Parser (FreyjaOutFormat)
+    format = do
+      w <- word
+      case (readOutFMT w) of
+        Just fmt => pure fmt
+        Nothing  => fail "Expected out format"
 
 private
 evaluate : Parser FriggCMD
@@ -94,13 +102,12 @@ evaluate = do
     string ":evaluate"
     space
     evl <- aspect
-    case evl of
-      Just e  => pure $ EvalPattern e
-      Nothing => (satisfy False)
+    pure $ Eval evl
   where
-    aspect : Parser (Maybe ConvPattern)
-    aspect = (string "" *> pure $ Just )
-         <|> pure Nothing
+    aspect : Parser EvalPattern
+    aspect = (string "sif"      *> return SifModel)
+         <|> (string "read"     *> return Readability)
+         <|> (string "template" *> return TemplateAd)
 
 private
 quit : Parser FriggCMD

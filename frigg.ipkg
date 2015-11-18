@@ -1,13 +1,23 @@
 package frigg
 
-opts = "-p effects -p containers -p lightyear --typeintype -p argparse -p xml -p read -p config"
+pkgs = effects
+     , containers
+     , lightyear
+     , argparse
+     , xml
+     , read
+     , config
+     , freyja
+     , edda
+     , sifcore
 
 modules = Frigg.Options
         , Frigg.Error
         , Frigg.Effs
-        , Frigg.Convert
         , Frigg.Schema
         , Frigg.Eval
+        , Frigg.API
+        , Frigg.REPL
         , Frigg.Main
 
 executable = frigg

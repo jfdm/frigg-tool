@@ -10,41 +10,39 @@ import System
 import XML.DOM
 import XML.Reader
 
+import Freyja
+import Freyja.Extract
+
 import Readability
 
 import Frigg.Effs
 import Frigg.Options
-import Frigg.Convert
 import Frigg.Error
-import Frigg.Schema
 import Frigg.Eval
+import Frigg.API
+import Frigg.REPL
 
-printLnEither : (Show a, Show b) => Either a b -> Eff () [STDIO]
-printLnEither (Left  x) = printLn x
-printLnEither (Right x) = printLn x
-
-execMode : Maybe FriggMode -> Eff () FriggEffs
+execMode : Maybe FriggMode -> Frigg ()
 execMode Nothing       = printLn NoModeSpecified
 execMode (Just VERS)   = printLn FeatureNotImpl
 execMode (Just HELP)   = putStrLn friggHelpStr
-execMode (Just Schema) = putStrLn schemaRNC
 
-execMode (Just REPL) = printLn FeatureNotImpl
-execMode (Just Conv) = printLn FeatureNotImpl
-execMode (Just Eval) = do
-    case patt !getOptions of
-      Nothing => Frigg.raise FileExpected
-      Just fn => do
-        case !(readXMLDoc fn) of
-          Left err  => printLn err
-          Right doc => printLnEither $ !(eval doc)
+execMode (Just REPL) = friggREPL
+execMode (Just Conv) = convertShowDoc
+execMode (Just Eval) = printLn !getPatternDoc
+execMode (Just Sif)  = evalSifAndReport
+
 
 friggMain : Eff () FriggEffs
 friggMain = do
   o <- processOptions
+  putOptions o
+  loadPatternDoc (patt o)
   execMode (mode o)
 
 main : IO ()
 main = do
   run $ friggMain
   exit 0
+
+-- --------------------------------------------------------------------- [ EOF ]

@@ -14,18 +14,11 @@ import ArgParse
 import XML.DOM
 import XML.Reader
 
+import Freyja.Convert
+
 -- -------------------------------------------------------------------- [ Mode ]
 
-data FriggMode = Eval | Conv | REPL | VERS | HELP | Schema
-data FriggOutFormat = FXML | FMDOWN | FORG
-
-readFriggOutFormat : String -> Maybe FriggOutFormat
-readFriggOutFormat str =
-  case toLower str of
-    "xml" => Just FXML
-    "md"  => Just FMDOWN
-    "org" => Just FORG
-    otherwise => Nothing
+data FriggMode = Eval | Conv | REPL | VERS | HELP | Sif
 
 -- ----------------------------------------------------------------- [ Options ]
 record FriggOpts where
@@ -34,14 +27,14 @@ record FriggOpts where
   patt    : Maybe String
   weights : Maybe String
   gscale  : Maybe String
-  to      : Maybe FriggOutFormat
+  to      : Maybe FreyjaOutFormat
   out     : Maybe String
   banner  : Bool
 
 mkDefOpts : FriggOpts
 mkDefOpts = MkFriggOpts
   (Just HELP) Nothing Nothing Nothing Nothing Nothing
-  False
+  True
 
 instance Default FriggOpts where
   default = mkDefOpts
@@ -53,33 +46,18 @@ convOpts (KeyValue k v)  o =
     "pattern" => Just $ record {patt    = Just v} o
     "weights" => Just $ record {weights = Just v} o
     "gscale"  => Just $ record {gscale  = Just v} o
-    "to"      => Just $ record {to      = readFriggOutFormat v} o
+    "to"      => Just $ record {to      = readOutFMT v} o
     otherwise => Nothing
 convOpts (Flag x) o =
   case x of
+    "sif"      => Just $ record {mode    = Just Sif}    o
     "help"     => Just $ record {mode    = Just HELP}   o
     "version"  => Just $ record {mode    = Just VERS}   o
     "eval"     => Just $ record {mode    = Just Eval}   o
     "conv"     => Just $ record {mode    = Just Conv}   o
+    "repl"     => Just $ record {mode    = Just REPL}   o
     "nobanner" => Just $ record {banner  = False}       o
-    "schema"   => Just $ record {mode    = Just Schema} o
     otherwise => Nothing
-
-friggBanner : String
-friggBanner = """
-    ______     _                ______            __
-   / ____/____(_)___ _____ _   /_  __/___  ____  / /
-  / /_  / ___/ / __ `/ __ `/    / / / __ \/ __ \/ /
- / __/ / /  / / /_/ / /_/ /    / / / /_/ / /_/ / /
-/_/   /_/  /_/\__, /\__, /    /_/  \____/\____/_/
-             /____//____/
-
-http://www.github.com/jfdm/frigg-tool
-Type :? for help
-
-Frigg is free software with ABSOLUTELY NO WARRANTY.
-"""
-
 
 friggHelpStr : String
 friggHelpStr = """Frigg (C) Jan de Muijnck-Hughes 2015
@@ -92,12 +70,13 @@ Flag                 | Description
 --weights="<fname>"  | A problem specification.
 --gscale="<fname"    | A solution specification.
 --to="<fmt>"         | The output format.
+--sif                | Evaluate embedded sif model.
 
 --help               | Display help
 --version            | Display version
 --eval               | Evaluate problem solution pairing
 --conv               | Convert to problem solution pairing
---schema             | Show XML Schema
+--repl               | REPL
 --nobanner           | Don't display banner
 """
 
