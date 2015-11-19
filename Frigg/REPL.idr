@@ -16,6 +16,8 @@ import Frigg.Eval
 import Frigg.API
 import Frigg.Commands
 
+-- ------------------------------------------------------------------- [ Begin ]
+
 friggBanner : String
 friggBanner = """
     ______     _                ______            __
@@ -42,14 +44,14 @@ fetchCMD = do
         fetchCMD
       Right cmd => pure cmd
 
-doCommand : FriggCMD -> Frigg ()
-doCommand Quit = pure ()
-doCommand Help = putStrLn showHelp
 
+doCommand : FriggCMD -> Frigg ()
+doCommand Quit             = pure ()
+doCommand Help             = putStrLn showHelp
 doCommand (Display part)   = doDisplay part
 doCommand (Convert outfmt) = doConvertShow outfmt
-doCommand (Eval _)         = printLn FeatureNotImpl
--- doCommand _ = printLn NoSuchCommand
+doCommand (Query qStr)     = doQuery qStr
+doCommand (Eval  what)     = doEvalAndReport what
 
 runREPL : Frigg ()
 runREPL = do
@@ -59,7 +61,6 @@ runREPL = do
       x    => do
         doCommand x
         runREPL
-
 
 ||| A Viewer to view a library of patterns.
 public

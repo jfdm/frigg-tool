@@ -5,6 +5,8 @@
 -- --------------------------------------------------------------------- [ EOH ]
 module Frigg.Error
 
+import XML.XPath
+
 data FriggError : Type where
   FeatureNotImpl    : FriggError
   NoFormatSpecified : FriggError
@@ -17,6 +19,8 @@ data FriggError : Type where
   NoSuchCommand     : FriggError
   ParseError        : String -> FriggError
   GeneralError      : String -> FriggError
+  EvalError         : String -> FriggError
+  ExtractionError   : XPathError -> FriggError
 
 instance Show FriggError where
   show NoSuchCommand     = "Command Not Recognised"
@@ -31,5 +35,7 @@ instance Show FriggError where
   show (GeneralError msg) = unwords ["General Error", msg]
   show (MissingFile fn)   = unwords ["Missing file:", fn]
   show (ParseError  msg)  = unlines ["Parse Error:", msg]
+  show (EvalError fn)     = unwords ["Error During Evaluation:", fn]
+  show (ExtractionError msg) = unwords ["Extraction Error", show msg]
 
 -- --------------------------------------------------------------------- [ EOF ]

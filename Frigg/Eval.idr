@@ -14,89 +14,65 @@ import Config.INI
 
 import XML.DOM
 import XML.XPath
+import XML.XPath.Query
+
+import Freyja.Utils
 
 import Frigg.Options
 import Frigg.Error
 import Frigg.Effs
-import Frigg.RCard
+import Frigg.Config
 
 -- -------------------------------------------------------------- [ Directives ]
 
 %access private
 
-public
-record EvalResult where
-  constructor MkEvalResult
-  readability : ReadResult
-  tAdherence  : Float
+-- ------------------------------------------------------------------- [ Begin ]
 
-instance Show EvalResult where
-  show (MkEvalResult x y) = unlines
-      [ "Automated Eval Result:"
-      , unwords ["\tReadability Score:", show x]
-      , unwords ["\tTemplate Adherence", show y]
-      ]
 
-getMappings : INIElem -> Dict String Float
-getMappings (INIFile is) =
-    Dict.fromList $ catMaybes $ map getMap is
-  where
-    getMap : INIElem -> Maybe (String, Float)
-    getMap (INIFile is)       = Nothing
-    getMap (INISection t kvs) = Nothing
-    getMap (INIEntry k v)     =
-      let val = (the (Float) (cast v)) in
-        case val < 0 of
-          True  => Nothing
-          False => Just (toLower k, val)
-
-getConfig : Maybe String -> Eff (Dict String Float) FriggEffs
-getConfig Nothing   = pure empty
-getConfig (Just fn) =
-  case !(readINIConfig fn) of
-    Left  err => pure empty
-    Right res => pure $ getMappings res
-
-getTemplateWeightings : Eff (Dict String Float) FriggEffs
-getTemplateWeightings = getConfig $ weights !getOptions
-
-getGradingScale : Eff (Dict String Float) FriggEffs
-getGradingScale = getConfig $ gscale !getOptions
+-- @TODO Make nicers
+getScore : (heading  : String)
+        -> (gradings : Dict String Float)
+        -> (doc      : XMLDoc)
+        -> Either FriggError Float
+getScore t gsc doc = do
+    case query (toLower t ++ "/@score") doc of
+      Left err => Left $ ExtractionError err
+      Right xs => case getText xs of
+        Nil     => Left $ EvalError $ unwords ["Node Not Found for:", show t]
+        (x::xs) => case getNodeValue x of
+          Nothing => Left $ EvalError $ unwords ["Score Not Given for:", show t]
+          Just v => case Dict.lookup (toLower v) gsc of
+            Nothing => Left $ EvalError $ unwords ["Weighting not found for:", show v]
+            Just s  => Right s
 
 calcTemplateAdherence : Dict String Float
                      -> Dict String Float
                      -> Document DOCUMENT
-                     -> Float
-calcTemplateAdherence ws gsc doc =
-    Dict.foldr (\x,y,z => z + doCalc x y) 0.0 ws
+                     -> Either FriggError Float
+calcTemplateAdherence ws gsc doc = do
+    ss <- mapEither (\(k,v) => doCalc k v) $ Dict.toList ws
+    pure $ foldl (+) 0.0 ss
   where
-    score : String -> Float
-    score k' =
-      case query (toLower k' ++ "/@score") doc of
-        Left err => 0.0
-        Right xs => case getText xs of
-          Nil     => 0.0
-          (x::xs) => case getNodeValue x of
-            Nothing => 0.0
-            Just v => case Dict.lookup (toLower v) gsc of
-              Just s  => s
-              Nothing => 0.0
-
-    doCalc : String -> Float -> Float
-    doCalc k weight = weight * (score k)
+    doCalc : String -> Float -> Either FriggError Float
+    doCalc t weight = do
+        res <- getScore t gsc doc
+        pure (weight * res)
 
 public
-eval : Document DOCUMENT -> Eff (Either FriggError EvalResult) FriggEffs
-eval doc = do
-  case calcReadability doc of
-    Nothing      => pure $ Left MalformedPattern
-    Just readRes => do
-      scale <- getGradingScale
-      weight <- getTemplateWeightings
-      case (isEmpty scale, isEmpty weight) of
-        (False, False) => do
-          let tadd = calcTemplateAdherence weight scale doc
-          pure $ Right (MkEvalResult readRes tadd)
-        otherwise => pure $ Left InvalidMapping
+evalTemplate : Frigg (Either FriggError Float)
+evalTemplate = do
+    doc <- getXMLDoc
+    scale <- getGradingScale
+    weight <- getTemplateWeightings
+    case (isEmpty scale, isEmpty weight) of
+        (False, False) => pure $ calcTemplateAdherence weight scale doc
+        otherwise      => pure $ Left InvalidMapping
+
+public
+evalTemplateAndReport : Frigg ()
+evalTemplateAndReport = do
+  (Right res) <- evalTemplate | Left err => printLn err
+  printLn res
 
 -- --------------------------------------------------------------------- [ EOF ]

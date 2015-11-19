@@ -14,7 +14,8 @@ pkgs = effects
 modules = Frigg.Options
         , Frigg.Error
         , Frigg.Effs
-        , Frigg.Schema
+        , Frigg.Types
+        , Frigg.Config
         , Frigg.Eval
         , Frigg.API
         , Frigg.REPL

@@ -29,6 +29,7 @@ data DisplayPattern = All
                     | Related
 
 data EvalPattern : Type where
+  EvalAll     : EvalPattern
   Readability : EvalPattern
   TemplateAd  : EvalPattern
 --  SolutionApp : EvalPattern
@@ -36,6 +37,7 @@ data EvalPattern : Type where
 
 public
 data FriggCMD : Type where
+  Query   : String -> FriggCMD
   Display : DisplayPattern  -> FriggCMD
   Convert : FreyjaOutFormat -> FriggCMD
   Eval    : EvalPattern     -> FriggCMD
@@ -55,6 +57,8 @@ Command                 | Description
                         |
 :convert <to>           | Convert to a valid out format: One of:
                         | [latex, org, markdown, xml ]
+                        |
+:query <string>         | Query XML Doc using XPath
                         |
 :quit :q :exit          | Quit the repl
 :? :help                | Show this help
@@ -108,11 +112,20 @@ evaluate = do
     aspect = (string "sif"      *> return SifModel)
          <|> (string "read"     *> return Readability)
          <|> (string "template" *> return TemplateAd)
+         <|> (string "all"      *> return EvalAll)
+
+private
+query : Parser FriggCMD
+query = do
+    string ":query"
+    space
+    qStr <- quoted '"'
+    pure $ Query qStr
 
 private
 quit : Parser FriggCMD
-quit = (string ":q"    *> return Quit)
-   <|> (string ":quit" *> return Quit)
+quit = (string ":quit" *> return Quit)
+   <|> (string ":q"    *> return Quit)
    <|> (string ":exit" *> return Quit)
 
 private
@@ -121,10 +134,11 @@ help = (string ":?"    *> return Help)
    <|> (string ":help" *> return Help)
 
 cmd : Parser FriggCMD
-cmd = quit
-  <|> convert
+cmd = convert
   <|> evaluate
   <|> display
+  <|> query
+  <|> quit
   <|> help
   <?> "Command"
 

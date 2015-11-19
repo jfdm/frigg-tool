@@ -23,6 +23,7 @@ import Sif.Pattern.Recover
 import Sif.Builder.AbsInterp
 
 import Readability
+import Readability.Process.XML
 
 import Frigg.Effs
 import Frigg.Options
@@ -44,6 +45,8 @@ loadPatternDoc (Just fn) = do
         Left err  => printLn $ Frigg.Error.ParseError (show err)
         Right doc => putPatternDoc doc
 
+-- --------------------------------------------------------------- [ Transform ]
+
 doConvertShow : FreyjaOutFormat -> Frigg ()
 doConvertShow fmt = do
     doc <- getPatternDoc
@@ -57,6 +60,7 @@ convertShowDoc = do
       Nothing  => Frigg.raise NoFormatSpecified
       Just fmt => doConvertShow fmt
 
+-- ---------------------------------------------------------------- [ Sif Eval ]
 evalSifRepr : Frigg Sif.EvalResult
 evalSifRepr = do
     doc <- getPatternDoc
@@ -71,6 +75,8 @@ evalSifAndReport = do
     Just res => putStrLn res
     Nothing  => putStrLn "oops"
 
+-- ----------------------------------------------------------------- [ Display ]
+
 doDisplay : DisplayPattern -> Frigg ()
 doDisplay All       = putStrLn (org    (convertPattern !getPatternDoc))
 doDisplay MData     = putStrLn (blocks (convertMetadata (mdata    !getPatternDoc)))
@@ -84,5 +90,40 @@ doDisplay Summary = do
     doc <- getPatternDoc
     putStrLn $ inlines (name doc)
     putStrLn $ blocks  (summary doc)
+
+-- ------------------------------------------------------------- [ Readability ]
+
+evalReadability : Frigg ReadResult
+evalReadability = do
+  xdoc <- getXMLDoc
+  case calcReadability xdoc of
+    Nothing      => Frigg.raise MalformedPattern
+    Just readRes => pure readRes
+
+evalReadAndReport : Frigg ()
+evalReadAndReport = do
+  res <- evalReadability
+  putStrLn $ unlines $ map show (Metrics.toList res)
+
+
+-- ------------------------------------------------------------------- [ Query ]
+
+doQuery : String -> Frigg ()
+doQuery qStr = do
+  xdoc <- getXMLDoc
+  case query qStr xdoc of
+    Left err  => printLn err
+    Right Nil => putStrLn "Nothing Found"
+    Right rs  => putStrLn $ unlines $ map (\r => show @{xml} r) rs
+
+-- ---------------------------------------------------------------- [ Template ]
+
+doEvalAndReport : EvalPattern -> Frigg ()
+doEvalAndReport SifModel    = evalSifAndReport
+doEvalAndReport TemplateAd  = evalTemplateAndReport
+doEvalAndReport Readability = evalReadAndReport
+doEvalAndReport EvalAll     = printLn FeatureNotImpl
+
+
 
 -- --------------------------------------------------------------------- [ EOF ]
