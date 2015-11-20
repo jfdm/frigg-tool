@@ -18,7 +18,7 @@ import Freyja.Convert
 
 -- -------------------------------------------------------------------- [ Mode ]
 
-data FriggMode = Eval | Conv | REPL | VERS | HELP | Sif
+data FriggMode = Read | Templ | Conv | REPL | VERS | HELP | Sif
 
 -- ----------------------------------------------------------------- [ Options ]
 record FriggOpts where
@@ -50,10 +50,11 @@ convOpts (KeyValue k v)  o =
     otherwise => Nothing
 convOpts (Flag x) o =
   case x of
+    "template" => Just $ record {mode    = Just Templ}  o
+    "read"     => Just $ record {mode    = Just Read}   o
     "sif"      => Just $ record {mode    = Just Sif}    o
     "help"     => Just $ record {mode    = Just HELP}   o
     "version"  => Just $ record {mode    = Just VERS}   o
-    "eval"     => Just $ record {mode    = Just Eval}   o
     "conv"     => Just $ record {mode    = Just Conv}   o
     "repl"     => Just $ record {mode    = Just REPL}   o
     "nobanner" => Just $ record {banner  = False}       o

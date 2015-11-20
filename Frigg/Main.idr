@@ -27,11 +27,11 @@ execMode Nothing       = printLn NoModeSpecified
 execMode (Just VERS)   = printLn FeatureNotImpl
 execMode (Just HELP)   = putStrLn friggHelpStr
 
-execMode (Just REPL) = friggREPL
-execMode (Just Conv) = convertShowDoc
-execMode (Just Eval) = printLn !getPatternDoc
-execMode (Just Sif)  = evalSifAndReport
-
+execMode (Just REPL)  = friggREPL
+execMode (Just Conv)  = convertShowDoc
+execMode (Just Read)  = evalReadAndReport
+execMode (Just Sif)   = evalSifAndReport
+execMode (Just Templ) = evalTemplateAndReport
 
 friggMain : Eff () FriggEffs
 friggMain = do
