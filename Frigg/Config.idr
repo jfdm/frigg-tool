@@ -52,5 +52,4 @@ getTemplateWeightings = getConfig $ weights !getOptions
 getGradingScale : Eff (Dict String Float) FriggEffs
 getGradingScale = getConfig $ gscale !getOptions
 
-
 -- --------------------------------------------------------------------- [ EOF ]

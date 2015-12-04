@@ -1,3 +1,17 @@
 #+TITLE: Frigg
 #+AUTHOR: Jan de Muijnck-Hughes
-#+DATE: <2015-08-22 Sat>
+#+DATE: [2015-08-22 Sat]
+
+    :                                 _____     _                 _____           _
+    :                                |  ___| __(_) __ _  __ _    |_   _|__   ___ | |
+    :                                | |_ | '__| |/ _` |/ _` |_____| |/ _ \ / _ \| |
+    :                                |  _|| |  | | (_| | (_| |_____| | (_) | (_) | |
+    :                                |_|  |_|  |_|\__, |\__, |     |_|\___/ \___/|_|
+    :                                             |___/ |___/
+    :
+
+A software utility for working with design pattern documents encoded
+in the [[http://www.github.com/jfdm/freyja-schema][Freyja Schema]], and possible created using [[http:www.github.com/jfdm/sif-lang][Sif]].
+
+The project has been programming using [[http://www.idris-lang.org][Idris]], a language with support
+for full spectrum dependent types.

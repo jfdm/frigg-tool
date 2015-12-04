@@ -124,6 +124,4 @@ doEvalAndReport TemplateAd  = evalTemplateAndReport
 doEvalAndReport Readability = evalReadAndReport
 doEvalAndReport EvalAll     = printLn FeatureNotImpl
 
-
-
 -- --------------------------------------------------------------------- [ EOF ]

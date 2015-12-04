@@ -36,7 +36,7 @@ getScore : (heading  : String)
         -> (doc      : XMLDoc)
         -> Either FriggError Float
 getScore t gsc doc = do
-    case query (toLower t ++ "/@score") doc of
+    case query (concat ["//", toLower t, "/@score"]) doc of
       Left err => Left $ ExtractionError err
       Right xs => case getText xs of
         Nil     => Left $ EvalError $ unwords ["Node Not Found for:", show t]

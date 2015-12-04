@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<pattern id="1234">
+  <name>Authentication through ID Cards</name>
+  <description>ID Cards are physical tokens handed out by a governing
+authority that can be used by people to verify their identity.</description>
+  <metadata id="nout">
+    <created>2015-01-01</created>
+    <modified>2015-01-09</modified>
+    <evaluated>2015-01-04</evaluated>
+    <auditors>
+      <auditor>Cees Boerman</auditor>
+    </auditors>
+    <authors>
+      <author>Henk Zelle</author>
+    </authors>
+    <tags>
+      <tag>authentication</tag>
+      <tag>identification</tag>
+    </tags>
+  </metadata>
+  <context score="B">
+    <name>Socio-Technical Local</name>
+    <description>How to perform local authentication using a mixture of technologyand human interactions.</description>
+  </context>
+  <problem score="B">
+    <name>Authentication</name>
+    <description>How to authenticate entities such that assurances can be made oftheir identity.</description>
+    <requirements score="B">
+      <usability id="8">
+        <name>Effortless Authentication</name>
+        <description>The authentication process should not require undue effort to do.</description>
+      </usability>
+      <functional id="7">
+        <name>Able to set limited access attempts</name>
+        <description>Entities that repeatedly try to authenticate with incorrect datashould be locked out of the system for some predefined period oftime.</description>
+      </functional>
+      <performance id="6">
+        <name>Timely Authentication</name>
+        <description>Processing authentication requests must not take forever, and betimely in their duration.</description>
+      </performance>
+      <reliability id="5">
+        <name>Authentication happens</name>
+        <description>Authentication must be consistent and that entities with up-to-dateauthentication details should authentication.</description>
+      </reliability>
+      <functional id="4">
+        <name>Changeable</name>
+        <description>The authentication step must be changable and re-enrollmentpossible.</description>
+      </functional>
+      <functional id="3">
+        <name>Authentication Mechanism</name>
+        <description>Solutions must consist of an authentication step.</description>
+      </functional>
+      <functional id="2">
+        <name>Proof of Authenticity</name>
+        <description>A proof is required that will attest to the authenticity of an entity.</description>
+      </functional>
+      <functional id="1">
+        <name>Enrollment</name>
+        <description>Solutions must have a means to enroll entities into theauthentication procedure.</description>
+      </functional>
+    </requirements>
+  </problem>
+  <solution score="C">
+    <name>ID Cards</name>
+    <description>ID Cards are physical tokens handed out by a governing authority.Users must enroll with the body to be issued with an ID Cards.</description>
+    <models score="C">
+      <structure modelTy="uml-component">
+        <name>Entities involved</name>
+        <model><![CDATA[
+To Be Added
+]]></model>
+        <description>To Be Added</description>
+      </structure>
+      <dynamic modelTy="uml-sequence">
+        <name>Authentication</name>
+        <model><![CDATA[
+subject -> authenticator : Request to be Authenticated.
+]]></model>
+        <description>To Be Added</description>
+      </dynamic>
+      <dynamic modelTy="uml-sequence">
+        <name> Enrolement </name>
+        <model><![CDATA[
+To Be Added
+]]></model>
+        <description>To Be Added</description>
+      </dynamic>
+    </models>
+    <properties>
+      <property>
+        <name>Governing Body Issued</name>
+        <description>Standardised means of identification accross governing body&apos;s remit.</description>
+        <traits>
+          <general svalue="SATISFIED">
+            <name>Standarised Mechanism</name>
+            <description>ID Cards are used in accordance with a standardised mechanism/protocol. The description of the protocol used includes an explicit authentication step.</description>
+            <affects>
+              <affect cvalue="MAKES" id="3"/>
+            </affects>
+          </general>
+          <general svalue="SATISFIED">
+            <name>Standardised form of Identification</name>
+            <description>ID Cards from a single governing body will follow a common standardised format, as devised by the governing body or some other body.</description>
+            <affects>
+              <affect cvalue="SOMENEG" id="8">Hard to use</affect>
+              <affect cvalue="SOMEPOS" id="4">Well Defined things</affect>
+              <affect cvalue="MAKES" id="1">Well Defined things</affect>
+            </affects>
+          </general>
+        </traits>
+      </property>
+      <property>
+        <name>Technology</name>
+        <description>Technology is Used.</description>
+        <traits>
+          <disadvantage svalue="WEAKDEN">
+            <affects>
+              <affect cvalue="HURTS" id="7">machines can be damaged/forged</affect>
+              <affect cvalue="HURTS" id="6">machine operations can be made infinite.</affect>
+              <affect cvalue="HURTS" id="5">machines can be wrong.</affect>
+            </affects>
+            <description>Technology is not always right.</description>
+            <name>Hackable</name>
+          </disadvantage>
+          <general svalue="SATISFIED">
+            <name>Machine Readable</name>
+            <description>Cards can be made electronic.</description>
+            <affects>
+              <affect cvalue="MAKES" id="8">using technology</affect>
+              <affect cvalue="MAKES" id="7">processing step is &apos;deterministic&apos;.</affect>
+              <affect cvalue="MAKES" id="6">machines operations are &apos;finite&apos;.</affect>
+              <affect cvalue="MAKES" id="5">machines are &apos;never&apos; wrong.</affect>
+            </affects>
+          </general>
+        </traits>
+      </property>
+      <property>
+        <name>ID Cards is a Token</name>
+        <description>The ID Cards is a token carried by people.</description>
+        <traits>
+          <advantage svalue="SATISFIED">
+            <name>Validity Period</name>
+            <description>Specific tokens can have a validity period.</description>
+            <affects>
+              <affect cvalue="HELPS" id="4">renewing of cards.</affect>
+              <affect cvalue="HELPS" id="5">ensuring up-to-date cards.</affect>
+            </affects>
+          </advantage>
+          <disadvantage svalue="WEAKSATIS">
+            <name>Stolen/Lost Tokens</name>
+            <description>Tokens can be stolen/lost.</description>
+            <affects>
+              <affect cvalue="HURTS" id="5">impersonation of entities.</affect>
+            </affects>
+          </disadvantage>
+          <general svalue="SATISFIED">
+            <name>Assignment of Cards</name>
+            <description>Only authorised bodies should be able to construct cards.</description>
+            <affects>
+              <affect cvalue="MAKES" id="2"/>
+              <affect cvalue="MAKES" id="1">assignment of cards is enrollment.</affect>
+            </affects>
+          </general>
+        </traits>
+      </property>
+    </properties>
+  </solution>
+  <evidence score="C">ID Cards are used in various countries in Europe to attest to the identity of a country&apos;s citizens. Within universities it is common for students to be issued with a matriculation card that provides evidence that the student is a registered student.</evidence>
+  <studies score="C">
+    <study>
+      <name>Left out on purpose</name>
+      <after>To Be Added</after>
+      <before>To Be Added</before>
+    </study>
+  </studies>
+</pattern>

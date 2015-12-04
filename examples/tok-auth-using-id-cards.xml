@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<pattern id="1234">
+  <name>Token-Based Authentication through ID Cards</name>
+  <description>ID Cards are physical tokens handed out by a
+  governing authority that can be used by people to verify their
+  identity.</description>
+  <metadata id="nout">
+    <created>nout</created>
+    <modified>nout</modified>
+    <evaluated>nout</evaluated>
+    <auditors>
+      <auditor>Fill me in</auditor>
+    </auditors>
+    <authors>
+      <author>Fill me in</author>
+    </authors>
+    <tags>
+      <tag>Fill me in</tag>
+    </tags>
+    <auditors>
+      <auditor>Fill me in</auditor>
+    </auditors>
+  </metadata>
+  <context>
+    <description>How to perform authentication using a mixture of
+    technology andhuman interactions.</description>
+    <name>Socio-Technical</name>
+  </context>
+  <problem>
+    <requirements>
+      <functional id="9">
+        <description>the ownership factors: Something the user has
+        (e.g., wrist band, IDcard, security token, cell phone with
+        built-in hardware token,software token, or cell phone
+        holding a software token)</description>
+        <name>Ownership Factor</name>
+      </functional>
+      <usability id="8">
+        <description>The authentication process should not require
+        undue effort to do.</description>
+        <name>Effortless Authentication</name>
+      </usability>
+      <functional id="7">
+        <description>Entities that repeatedly try to authenticate
+        with incorrect datashould be locked out of the system for
+        some predefined period oftime.</description>
+        <name>Able to set limited access attempts</name>
+      </functional>
+      <performance id="6">
+        <description>Processing authentication requests must not
+        take forever, and betimely in their duration.</description>
+        <name>Timely Authentication</name>
+      </performance>
+      <reliability id="5">
+        <description>Authentication must be consistent and that
+        entities with up-to-dateauthentication details should
+        authentication.</description>
+        <name>Authentication happens</name>
+      </reliability>
+      <functional id="4">
+        <description>The authentication step must be changable and
+        re-enrollmentpossible.</description>
+        <name>Changable</name>
+      </functional>
+      <functional id="3">
+        <description>Solutions must consist of an authentication
+        step.</description>
+        <name>Authentication Mechanism</name>
+      </functional>
+      <functional id="2">
+        <description>A proof is required that will attest to the
+        authenticity of an entity.</description>
+        <name>Proof of Authenticity</name>
+      </functional>
+      <functional id="1">
+        <description>Solutions must have a means to enroll entities
+        into theauthentication procedure.</description>
+        <name>Enrolment</name>
+      </functional>
+    </requirements>
+    <description>How to authenticate entities.</description>
+    <name>Token-Based Authentication</name>
+  </problem>
+  <solution>
+    <models>
+      <dynamic modelTy="unknown">
+        <model>
+          <![CDATA[
+                     "MODEL inserted here"
+                    ]]>
+        </model>
+        <description>To Added</description>
+        <name>Example Dynamic</name>
+      </dynamic>
+      <structure modelTy="unknown">
+        <model>
+          <![CDATA[
+                     "MODEL inserted here"
+                    ]]>
+        </model>
+        <description>To Added</description>
+        <name>Example Structure</name>
+      </structure>
+    </models>
+    <properties>
+      <property>
+        <traits>
+          <general svalue="SATISFIED">
+            <affects>
+              <affect cvalue="MAKES" id="3"/>
+            </affects>
+            <description>To Added</description>
+            <name>Standarised Mechanism</name>
+          </general>
+          <general svalue="SATISFIED">
+            <affects>
+              <affect cvalue="SOMEPOS" id="4"/>
+              <affect cvalue="MAKES" id="1"/>
+            </affects>
+            <description>To Added</description>
+            <name>Standardisadvantageed form of Identification</name>
+          </general>
+        </traits>
+        <description>Standardisadvantageed means of identification accross
+        governing bodys remit.</description>
+        <name>Governing Body Issued</name>
+      </property>
+      <property>
+        <traits>
+          <disadvantage svalue="WEAKDEN">
+            <affects>
+              <affect cvalue="BREAKS" id="7">machines can be
+              damaged/forged</affect>
+              <affect cvalue="BREAKS" id="6">machine
+              operations can be made infinite.</affect>
+              <affect cvalue="BREAKS" id="5">machines can be
+              wrong.</affect>
+            </affects>
+            <description>Technology is not always
+            right.</description>
+            <name>Hackable</name>
+          </disadvantage>
+          <general svalue="SATISFIED">
+            <affects>
+              <affect cvalue="HELPS" id="7">processing step is
+              deterministic.</affect>
+              <affect cvalue="HELPS" id="6">machines
+              operations are finite.</affect>
+              <affect cvalue="HELPS" id="5">machines are
+              never wrong.</affect>
+            </affects>
+            <description>Cards can be made
+            electronic.</description>
+            <name>Machine Readable</name>
+          </general>
+        </traits>
+        <description>Technology is Used.</description>
+        <name>Technology</name>
+      </property>
+      <property>
+        <traits>
+          <general svalue="SATISFIED">
+            <affects>
+              <affect cvalue="MAKES" id="9">token is something
+              you have.</affect>
+            </affects>
+            <description>Cards are physical tokens.</description>
+            <name>Token</name>
+          </general>
+          <advantage svalue="SATISFIED">
+            <affects>
+              <affect cvalue="HELPS" id="4">renewing of
+              cards.</affect>
+              <affect cvalue="HELPS" id="5">ensuring
+              up-to-date cards.</affect>
+            </affects>
+            <description>Specific tokens can have a validity
+            period.</description>
+            <name>Validity Period</name>
+          </advantage>
+          <general svalue="SATISFIED">
+            <affects>
+              <affect cvalue="MAKES" id="1">assignment of
+              cards is enrollment.</affect>
+            </affects>
+            <description>Only authorised bodies should be able to
+            construct cards.</description>
+            <name>Assignment of Cards</name>
+          </general>
+        </traits>
+        <description>The ID Cards is a token carried by
+        people.</description>
+        <name>ID Cards is a Token</name>
+      </property>
+    </properties>
+    <description>ID Cards are physical tokens handed out by a
+    governing authority.Users must enroll with the body to be
+    issued with an ID Cards.</description>
+    <name>ID Cards</name>
+  </solution>
+  <evidence>To Added</evidence>
+  <studies>
+    <study>
+      <after>To Added</after>
+      <before>To Added</before>
+      <name>To be determined</name>
+    </study>
+  </studies>
+</pattern>

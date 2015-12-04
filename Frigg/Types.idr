@@ -1,11 +1,14 @@
+-- --------------------------------------------------------------- [ Types.idr ]
+-- Module    : Types.idr
+-- Copyright : (c) Jan de Muijnck-Hughes
+-- License   : see LICENSE
+-- --------------------------------------------------------------------- [ EOH ]
 module Frigg.Types
-
 
 import Sif.Types
 import Sif.Pattern
 import Readability
 import Readability.Process.XML
-
 
 data PEvalResult : Type where
   ResSif  : EvalResult -> PEvalResult

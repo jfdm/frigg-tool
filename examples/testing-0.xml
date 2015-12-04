@@ -1,0 +1,126 @@
+<?xml version="1.1" ?>
+<pattern id="anySimpleType">
+  <name>string</name>
+  <summary score="A">gero cum</summary>
+  <metadata>
+    <aliases>
+      <!--1 or more repetitions:-->
+      <alias>string</alias>
+    </aliases>
+    <tags>
+      <!--1 or more repetitions:-->
+      <tag>string</tag>
+    </tags>
+    <created>string</created>
+    <modified>string</modified>
+    <evaluated>string</evaluated>
+    <authors>
+      <!--1 or more repetitions:-->
+      <author>string</author>
+    </authors>
+    <auditors>
+      <!--1 or more repetitions:-->
+      <auditor>string</auditor>
+    </auditors>
+  </metadata>
+  <context score="D"><name>fudud</name><description>aaa</description></context>
+  <problem score="E">
+    <name>string</name>
+    <description>string</description>
+    <requirements score="B">
+      <!--You have a CHOICE of the next 5 items at this level-->
+      <functional id="1">
+        <name>string</name>
+        <description>string</description>
+      </functional>
+      <usability id="2">
+        <name>string</name>
+        <description>string</description>
+      </usability>
+      <reliability id="3">
+        <name>string</name>
+        <description>string</description>
+      </reliability>
+      <performance id="4">
+        <name>string</name>
+        <description>string</description>
+      </performance>
+      <supportability id="5">
+        <name>string</name>
+        <description>string</description>
+      </supportability>
+    </requirements>
+  </problem>
+  <solution>
+    <name>string</name>
+    <description>string</description>
+    <models score="D">
+      <!--You have a CHOICE of the next 2 items at this level-->
+      <structure score="D">
+        <name>string</name>
+        <description>string</description>
+        <model><![CDATA[
+        string
+        ]]></model>
+      </structure>
+      <dynamic score="E">
+        <name>string</name>
+        <description>string</description>
+        <model><![CDATA[
+        string
+        ]]></model>
+      </dynamic>
+    </models>
+    <properties score="D">
+      <!--1 or more repetitions:-->
+      <property score="C">
+        <name>string</name>
+        <description>string</description>
+        <traits>
+          <!--You have a CHOICE of the next 3 items at this level-->
+          <advantage score="D" sValue="WEAKDEN">
+            <name>string</name>
+            <description>string</description>
+            <affects>
+              <!--1 or more repetitions:-->
+              <affect cValue="SOMEPOS" id="1">ferant profundum</affect>
+            </affects>
+          </advantage>
+          <disadvantage score="B" sValue="UNKNOWN">
+            <name>string</name>
+            <description>string</description>
+            <affects>
+              <!--1 or more repetitions:-->
+              <affect cValue="SOMEPOS" id="2">iovis flammato</affect>
+            </affects>
+          </disadvantage>
+          <general score="E" sValue="UNKNOWN">
+            <name>string</name>
+            <description>string</description>
+            <affects>
+              <!--1 or more repetitions:-->
+              <affect cValue="SOMEPOS" id="3">nubibus flammas</affect>
+            </affects>
+          </general>
+        </traits>
+      </property>
+    </properties>
+  </solution>
+  <evidence score="C">hoc rapidum</evidence>
+  <studies score="E">
+    <!--1 or more repetitions:-->
+    <study>
+      <name>string</name>
+      <before>string</before>
+      <after>string</after>
+    </study>
+  </studies>
+  <!--Optional:-->
+  <relations score="A">
+    <!--You have a CHOICE of the next 4 items at this level-->
+    <specialises patternID="anySimpleType">speluncis circum</specialises>
+    <requires patternID="anySimpleType">aris coniunx</requires>
+    <linked patternID="anySimpleType">praeterea arce</linked>
+    <implements patternID="anySimpleType">claustra circum</implements>
+  </relations>
+</pattern>

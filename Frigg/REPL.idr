@@ -1,3 +1,8 @@
+-- ---------------------------------------------------------------- [ REPL.idr ]
+-- Module    : REPL.idr
+-- Copyright : (c) Jan de Muijnck-Hughes
+-- License   : see LICENSE
+-- --------------------------------------------------------------------- [ EOH ]
 module Frigg.REPL
 
 import XML.DOM

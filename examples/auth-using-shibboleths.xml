@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<pattern id="1234">
+  <name> Authentication through Shibboleths </name>
+  <description score="B"> Shibboleths are challenge response phrases used for
+identification in hostile territory.
+ </description>
+  <metadata id="nout">
+    <created>2015-09-01</created>
+    <modified>2015-09-09</modified>
+    <evaluated>2015-09-06</evaluated>
+    <auditors>
+      <auditor>Bart Smits</auditor>
+    </auditors>
+    <authors>
+      <author>Geert de Visser</author>
+    </authors>
+    <tags>
+      <tag>authentication</tag>
+      <tag>societal</tag>
+      <tag>shibboleth</tag>
+    </tags>
+    <auditors>
+      <auditor>Jacobs Brandt </auditor>
+    </auditors>
+  </metadata>
+  <context score="B">
+    <description> How to authenticate without relying on technology.
+ </description>
+    <name> Non-Technical </name>
+  </context>
+  <problem score="B">
+    <requirements score="B">
+      <usability id="8">
+        <description> The authentication process should not require undue effort to do.
+ </description>
+        <name> Effortless Authentication </name>
+      </usability>
+      <functional id="7">
+        <description> Entities that repeatedly try to authenticate with incorrect datashould be locked out of the system for some predefined period oftime.
+ </description>
+        <name> Able to set limited access attempts </name>
+      </functional>
+      <performance id="6">
+        <description> Processing authentication requests must not take forever, and betimely in their duration.
+ </description>
+        <name> Timely Authentication </name>
+      </performance>
+      <reliability id="5">
+        <description> Authentication must be consistent and that entities with up-to-dateauthentication details should authentication.
+ </description>
+        <name> Authentication happens </name>
+      </reliability>
+      <functional id="4">
+        <description> The authentication step must be changable and re-enrollmentpossible.
+ </description>
+        <name> Changeable </name>
+      </functional>
+      <functional id="3">
+        <description> Solutions must consist of an authentication step.
+ </description>
+        <name> Authentication Mechanism </name>
+      </functional>
+      <functional id="2">
+        <description> A proof is required that will attest to the authenticity of an entity.
+ </description>
+        <name> Proof of Authenticity </name>
+      </functional>
+      <functional id="1">
+        <description> Solutions must have a means to enroll entities into theauthentication procedure.
+ </description>
+        <name> Enrollment </name>
+      </functional>
+    </requirements>
+    <description> How to authenticate entities such that assurances can be made oftheir identity.
+ </description>
+    <name> Authentication </name>
+  </problem>
+  <solution score="A">
+    <models score="A">
+      <dynamic modelTy="uml-sequence">
+        <model><![CDATA[
+subject -> authenticator : Request to be Authenticated.
+authenticator -> subject : Request Proof.
+subject -> authenticator : Send Proof.
+authenticator -> authenticator : Check Proof.
+alt subject is authentic
+  authenticator -> subject : Success
+else subject is a phony
+  authenticator -> subject : Reject
+end
+]]></model>
+        <description> The act of authentication requires that the authentication subject go through a CR mechanism.
+ </description>
+        <name> Authentication </name>
+      </dynamic>
+      <dynamic modelTy="uml-sequence">
+        <model><![CDATA[
+subject -> enroller : Request Enrollment.
+enroller -> subject : Provide Shibboleth
+subject -> enroller : Acknowledge receipt.
+loop until success
+  enroller -> subject : Request Authentication
+  subject -> enroller : Shibboleth
+  alt subject is authentic
+    enroller -> subject : Success
+  else subject is a phony
+    enroller -> subject : Reject
+  end
+]]></model>
+        <description> Subject enrolment, requires that the authenticating subject speaks to the enrollment entitiy. This enrolment entity then interacts with the subject until satisfied that the subjects knowns the phrase.
+ </description>
+        <name> Enrolement </name>
+      </dynamic>
+      <structure modelTy="uml-component">
+        <model><![CDATA[
+component Subject
+component Authenticator
+component Enroller
+
+interface "Enrolement"   as enrol
+interface "Authenticate" as auth
+
+Authenticator - auth  : provides
+Enroller      - enrol : provides
+
+Subject ..> enrol : requests
+Subject ..> auth  : requests
+]]></model>
+        <description> Within the shibboleth setup there are three main
+        components.  The subject requesting access.  The authenticator
+        that performs the authenticity check.  An enrolment component
+        that enrols a subject into the system.
+ </description>
+        <name> Example Structure </name>
+      </structure>
+    </models>
+    <properties>
+      <property score="A">
+        <traits>
+          <general svalue="SATISFIED">
+            <affects>
+              <affect cvalue="HELPS" id="7"> clearly defined process, but confusion over which phrase used..
+ </affect>
+              <affect cvalue="HELPS" id="6"> parties will now the result immediately.
+ </affect>
+              <affect cvalue="HELPS" id="5"> predefined phrases are learned.
+ </affect>
+              <affect cvalue="MAKES" id="3"> very nature the C-R step is the auththenication step.
+ </affect>
+            </affects>
+            <description> The C-R mechanism is the authentication step.
+ </description>
+            <name> Act of C-R </name>
+          </general>
+          <general svalue="SATISFIED">
+            <affects>
+              <affect cvalue="SOMEPOS" id="8"> can be easy to learn.
+ </affect>
+              <affect cvalue="HELPS" id="4"> new phrases to learn
+ </affect>
+              <affect cvalue="SOMEPOS" id="5"> users will be tested, but may forget later
+ </affect>
+              <affect cvalue="HELPS" id="1"> users have to learn the phrases
+ </affect>
+            </affects>
+            <description> The phrases used are only known to those enrolled in the process.
+ </description>
+            <name> Learning Shibboleths </name>
+          </general>
+        </traits>
+        <description> Shibboleths are a Challenge Response Mechanism. For authentication, people ask for a phrase to be pronounced. If pronounced incorrectly an error is known to be made.
+ </description>
+        <name> Shibboleths are a C-R Mechanism </name>
+      </property>
+      <property score="B">
+        <traits>
+          <general svalue="SATISFIED">
+            <affects>
+              <affect cvalue="MAKES" id="2"> virtue of knowledge of how to pronounce the phrase.</affect>
+              <affect cvalue="HELPS" id="5">phrase and knowledge of how to pronounce is restricted.</affect>
+
+            </affects>
+            <description> The Proof comes from how it is pronounced.
+ </description>
+            <name> Pronunciation is the Proof </name>
+          </general>
+          <general svalue="WEAKSATIS">
+            <affects>
+              <affect cvalue="SOMEPOS" id="3"> phrase and knowledge of how to pronounce is restricted.
+ </affect>
+              <affect cvalue="SOMEPOS" id="2"> restricting choice of phrase.
+ </affect>
+            </affects>
+            <description> Depending on the culture and phrased use, knowledge of how to pronounce the phrase may be more wide spread than originally thought.
+ </description>
+            <name> Known to a select few </name>
+          </general>
+        </traits>
+        <description> A shibboleth is a phrase whose pronunciation is known only to acertain group.
+ </description>
+        <name> Known Phrase </name>
+      </property>
+    </properties>
+    <description> Shibboleths are a challenge response mechanism that relies on participants to know a series of phrases whose pronunciation is known to only those accustomed with the phrase. When challenged an entity mustbe able to recite and pronounce the shibboleth correctly.
+ </description>
+    <name> Shibboleths </name>
+  </solution>
+  <evidence score="A">
+Some well known examples from World War Two are: /Schrijver van Scheveningen/---used by the Dutch Resistance; /Visser van Vlissingen/---another phrase used by Dutch Resistance; and /Lollapalooza/---used by US Soldiers in the Pacific Theatre against the Japanese.
+These phrases were chosen due to the difficulty in pronunciation that non-native speakers or had.
+
+    For example, in Dutch the syllable &apos;Sch&apos; has a very distinctive sound that only a fluent/native Dutch speaker will be able to reproduce, and Japanese speakers have difficulty in pronouncing the letter &apos;L&apos;.
+Upon encountering a person who claims to be from a certain social group, the person can be challenged to pronounce the group&apos;s shibboleth.
+If the person cannot pronounce the shibboleth correctly it can be argued that the person is not an authentic member of the social group, and therefore must be &apos;dealt with&apos;.
+ </evidence>
+  <studies score="A">
+    <study>
+      <name>Organising a Party in a Public Space.</name>
+      <before>The School of Computer Science are organising a party for Jim at a pub in town. The party is to be held at back of the pub in a enclosed area, policed by security guards. During the party several random strangers come and try to gain access, and fool the security into saying they are ony the list.
+      </before>
+      <after>
+        For the next party organised by the School. They decided to
+        use a shibboleth.  During a weekly staff meeting, all memeber
+        are told that the pass phrase is: /gif/. A member of staff
+        informs the pub&apos;s security team of the pass phrase and
+        appropriate pronounciation..  During the party, when random
+        strangers (or party goers) attempt to gain access to the
+        enclosed area, they are asked for the pass-phrase. Those who
+        correctl pronounce the phrases gain access. Those that cannot,
+        do not gain access.
+      </after>
+    </study>
+  </studies>
+</pattern>

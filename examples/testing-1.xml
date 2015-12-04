@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<pattern>
+  <name score="TO BE DETERMINED">InfoSec through AsymCrypto</name>
+  <description score="TO BE DETERMINED">TO BE
+  DETERMINED</description>
+  <metadata>
+    <aliases>
+      <alias>TO BE DETERMIND</alias>
+    </aliases>
+    <tags>
+      <tag>TO BE DETERMIND</tag>
+    </tags>
+    <created>TO BE DETERMIND</created>
+    <modified>TO BE DETERMIND</modified>
+    <evaluated>TO BE DETERMIND</evaluated>
+    <authors>
+      <author>TO BE DETERMIND</author>
+    </authors>
+    <auditors>
+      <auditor>TO BE DETERMIND</auditor>
+    </auditors>
+  </metadata>
+  <context score="TO BE DETERMINED">TO BE DETERMIND</context>
+  <problem score="TO BE DETERMINED">
+    <requirements>
+      <performance id="4" score="TO BE DETERMINED">
+        <name score="TO BE DETERMINED">Suitable performance</name>
+        <description score="TO BE DETERMINED">TO BE
+        DETERMINED</description>
+      </performance>
+      <performance id="3" score="TO BE DETERMINED">
+        <name score="TO BE DETERMINED">Suitable Security
+        Level</name>
+        <description score="TO BE DETERMINED">TO BE
+        DETERMINED</description>
+      </performance>
+      <functional id="2" score="TO BE DETERMINED">
+        <name score="TO BE DETERMINED">Recipient
+        Confidentiality</name>
+        <description score="TO BE DETERMINED">TO BE
+        DETERMINED</description>
+      </functional>
+      <functional id="1" score="TO BE DETERMINED">
+        <name score="TO BE DETERMINED">Data Confidentiality</name>
+        <description score="TO BE DETERMINED">TO BE
+        DETERMINED</description>
+      </functional>
+    </requirements>
+    <name score="TO BE DETERMINED">Information Secrecy</name>
+    <description score="TO BE DETERMINED">TO BE
+    DETERMINED</description>
+  </problem>
+  <solution score="TO BE DETERMINED">
+    <name score="TO BE DETERMINED">Asymmetric Cryptography</name>
+    <description score="TO BE DETERMINED">TO BE
+    DETERMINED</description>
+    <dynamics score="TO BE DETERMINED">
+      <model modelTy="class | component | sequence | deployment">
+        <![CData[
+         "TO BE DETERMINED"
+        ]]>
+        <description>TO BE DETERMINED</description>
+      </model>
+      <description>TO BE DETERMINED</description>
+    </dynamics>
+    <structure score="TO BE DETERMINED">
+      <model modelTy="class | component | sequence | deployment">
+        <![CData[
+         "TO BE DETERMINED"
+        ]]>
+        <description>TO BE DETERMINED</description>
+      </model>
+      <description>TO BE DETERMINED</description>
+    </structure>
+    <properties score="TO BE DETERMINED">
+      <property score="TO BE DETERMINED">
+        <name score="TO BE DETERMINED">Variable Security
+        Parameter</name>
+        <description score="TO BE DETERMINED">TO BE
+        DETERMINED</description>
+        <traits score="TO BE DETERMINED">
+          <trait svalue="SATISFIED" score="TO BE DETERMINED">
+            <name score="TO BE DETERMINED">Parameter
+            Computation</name>
+            <description score="TO BE DETERMINED">TO BE
+            DETERMINED</description>
+            <affects score="TO BE DETERMINED">
+              <affect score="TO BE DETERMINED" cvalue="HURTS"
+              linksTo="4"></affect>
+            </affects>
+          </trait>
+          <trait svalue="SATISFIED" score="TO BE DETERMINED">
+            <name score="TO BE DETERMINED">Parameter
+            Selection</name>
+            <description score="TO BE DETERMINED">TO BE
+            DETERMINED</description>
+            <affects score="TO BE DETERMINED">
+              <affect score="TO BE DETERMINED" cvalue="HURTS"
+              linksTo="3"></affect>
+            </affects>
+          </trait>
+          <trait svalue="SATISFIED" score="TO BE DETERMINED">
+            <name score="TO BE DETERMINED">Greater Security</name>
+            <description score="TO BE DETERMINED">TO BE
+            DETERMINED</description>
+            <affects score="TO BE DETERMINED">
+              <affect score="TO BE DETERMINED" cvalue="MAKES"
+              linksTo="3"></affect>
+            </affects>
+          </trait>
+        </traits>
+      </property>
+      <property score="TO BE DETERMINED">
+        <name score="TO BE DETERMINED">Maths Algorithms</name>
+        <description score="TO BE DETERMINED">TO BE
+        DETERMINED</description>
+        <traits score="TO BE DETERMINED">
+          <trait svalue="SATISFIED" score="TO BE DETERMINED">
+            <name score="TO BE DETERMINED">Maths well
+            studied</name>
+            <description score="TO BE DETERMINED">TO BE
+            DETERMINED</description>
+            <affects score="TO BE DETERMINED">
+              <affect score="TO BE DETERMINED" cvalue="HELPS"
+              linksTo="2"></affect>
+            </affects>
+          </trait>
+          <trait svalue="WEAKSATIS" score="TO BE DETERMINED">
+            <name score="TO BE DETERMINED">Computationally
+            Expensive</name>
+            <description score="TO BE DETERMINED">TO BE
+            DETERMINED</description>
+            <affects score="TO BE DETERMINED">
+              <affect score="TO BE DETERMINED" cvalue="HURTS"
+              linksTo="4"></affect>
+            </affects>
+          </trait>
+          <trait svalue="SATISFIED" score="TO BE DETERMINED">
+            <name score="TO BE DETERMINED">Maths Guarantee</name>
+            <description score="TO BE DETERMINED">TO BE
+            DETERMINED</description>
+            <affects score="TO BE DETERMINED">
+              <affect score="TO BE DETERMINED" cvalue="MAKES"
+              linksTo="1"></affect>
+            </affects>
+          </trait>
+        </traits>
+      </property>
+      <property score="TO BE DETERMINED">
+        <name score="TO BE DETERMINED">Public Key Pairs</name>
+        <description score="TO BE DETERMINED">TO BE
+        DETERMINED</description>
+        <traits score="TO BE DETERMINED">
+          <trait svalue="SATISFIED" score="TO BE DETERMINED">
+            <name score="TO BE DETERMINED">Key Pair</name>
+            <description score="TO BE DETERMINED">TO BE
+            DETERMINED</description>
+            <affects score="TO BE DETERMINED">
+              <affect score="TO BE DETERMINED" cvalue="HELPS"
+              linksTo="1"></affect>
+            </affects>
+          </trait>
+          <trait svalue="SATISFIED" score="TO BE DETERMINED">
+            <name score="TO BE DETERMINED">PKI</name>
+            <description score="TO BE DETERMINED">TO BE
+            DETERMINED</description>
+            <affects score="TO BE DETERMINED">
+              <affect score="TO BE DETERMINED" cvalue="HURTS"
+              linksTo="3"></affect>
+            </affects>
+          </trait>
+          <trait svalue="SATISFIED" score="TO BE DETERMINED">
+            <name score="TO BE DETERMINED">Different Keys</name>
+            <description score="TO BE DETERMINED">TO BE
+            DETERMINED</description>
+            <affects score="TO BE DETERMINED">
+              <affect score="TO BE DETERMINED" cvalue="MAKES"
+              linksTo="2"></affect>
+            </affects>
+          </trait>
+        </traits>
+      </property>
+    </properties>
+  </solution>
+  <evidence score="TO BE DETERMINED">TO BE DETERMIND</evidence>
+  <studies score="TO BE DETERMINED">
+    <study score="TO BE DETERMINED">
+      <before></before>
+      <after></after>
+    </study>
+  </studies>
+  <relations score="TO BE DETERMINED">
+    <link patternID="TO BE DETERMINED"
+    relationship="specialises | implements | uses | linkedTo">
+    </link>
+  </relations>
+</pattern>
