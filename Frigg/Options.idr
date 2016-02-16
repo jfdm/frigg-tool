@@ -16,11 +16,14 @@ import XML.Reader
 
 import Freyja.Convert
 
+%access export
 -- -------------------------------------------------------------------- [ Mode ]
 
+public export
 data FriggMode = Read | Templ | Conv | REPL | VERS | HELP | Sif
 
 -- ----------------------------------------------------------------- [ Options ]
+public export
 record FriggOpts where
   constructor MkFriggOpts
   mode    : Maybe FriggMode
@@ -31,13 +34,15 @@ record FriggOpts where
   out     : Maybe String
   banner  : Bool
 
+export
 mkDefOpts : FriggOpts
 mkDefOpts = MkFriggOpts
   (Just HELP) Nothing Nothing Nothing Nothing Nothing
   True
 
-instance Default FriggOpts where
+Default FriggOpts where
   default = mkDefOpts
+
 
 convOpts : Arg -> FriggOpts -> Maybe FriggOpts
 convOpts (Files (x::xs)) o = Nothing
@@ -60,6 +65,7 @@ convOpts (Flag x) o =
     "nobanner" => Just $ record {banner  = False}       o
     otherwise => Nothing
 
+export
 friggHelpStr : String
 friggHelpStr = """Frigg (C) Jan de Muijnck-Hughes 2015
 

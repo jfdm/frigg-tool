@@ -32,9 +32,9 @@ import Frigg.Config
 
 -- @TODO Make nicers
 getScore : (heading  : String)
-        -> (gradings : Dict String Float)
+        -> (gradings : Dict String Double)
         -> (doc      : XMLDoc)
-        -> Either FriggError Float
+        -> Either FriggError Double
 getScore t gsc doc = do
     case query (concat ["//", toLower t, "/@score"]) doc of
       Left err => Left $ ExtractionError err
@@ -46,21 +46,21 @@ getScore t gsc doc = do
             Nothing => Left $ EvalError $ unwords ["Weighting not found for:", show v]
             Just s  => Right s
 
-calcTemplateAdherence : Dict String Float
-                     -> Dict String Float
+calcTemplateAdherence : Dict String Double
+                     -> Dict String Double
                      -> Document DOCUMENT
-                     -> Either FriggError Float
+                     -> Either FriggError Double
 calcTemplateAdherence ws gsc doc = do
     ss <- mapEither (\(k,v) => doCalc k v) $ Dict.toList ws
     pure $ foldl (+) 0.0 ss
   where
-    doCalc : String -> Float -> Either FriggError Float
+    doCalc : String -> Double -> Either FriggError Double
     doCalc t weight = do
         res <- getScore t gsc doc
         pure (weight * res)
 
-public
-evalTemplate : Frigg (Either FriggError Float)
+export
+evalTemplate : Frigg (Either FriggError Double)
 evalTemplate = do
     doc <- getXMLDoc
     scale <- getGradingScale
@@ -69,7 +69,7 @@ evalTemplate = do
         (False, False) => pure $ calcTemplateAdherence weight scale doc
         otherwise      => pure $ Left InvalidMapping
 
-public
+export
 evalTemplateAndReport : Frigg ()
 evalTemplateAndReport = do
   (Right res) <- evalTemplate | Left err => printLn err

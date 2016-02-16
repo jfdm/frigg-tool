@@ -7,6 +7,9 @@ module Frigg.Error
 
 import XML.XPath
 
+%access export
+
+public export
 data FriggError : Type where
   FeatureNotImpl    : FriggError
   NoFormatSpecified : FriggError
@@ -22,7 +25,7 @@ data FriggError : Type where
   EvalError         : String -> FriggError
   ExtractionError   : XPathError -> FriggError
 
-instance Show FriggError where
+Show FriggError where
   show NoSuchCommand     = "Command Not Recognised"
   show PatternDocMissing = "External Document needs to be specified."
   show NoModeSpecified   = "No Mode Specified"

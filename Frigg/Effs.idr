@@ -26,21 +26,22 @@ import Frigg.Error
 
 -- -------------------------------------------------------------- [ Directives ]
 
-%access public
+%access export
 
 -- ------------------------------------------------------------------- [ State ]
-
+public export
 record FriggState where
   constructor MkFriggState
   opts : FriggOpts
   pdoc : Maybe PatternDoc
   xdoc : Maybe XMLDoc
 
-instance Default FriggState where
+Default FriggState where
   default = MkFriggState mkDefOpts Nothing Nothing
 
 -- ----------------------------------------------------------------- [ Effects ]
 
+public export
 FriggEffs : List EFFECT
 FriggEffs = [ FILE_IO ()
             , SYSTEM
@@ -49,10 +50,12 @@ FriggEffs = [ FILE_IO ()
             , 'fstate   ::: STATE FriggState
           ]
 
+
 namespace Frigg
   raise : FriggError -> Eff b ['ferr ::: EXCEPTION FriggError]
   raise err = 'ferr :- Exception.raise err
 
+public export
 Frigg : Type -> Type
 Frigg rTy = Eff rTy FriggEffs
 

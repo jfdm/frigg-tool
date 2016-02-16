@@ -1,23 +1,23 @@
 ##  Makefile
 
 IDRIS := idris
-LIB   := frigg
+EXE   := frigg
 OPTS  :=
 
-.PHONY: clean build  clobber check doc
+.PHONY: clean build clobber check doc exe
 
-build:
-	${IDRIS} ${OPTS} --build ${LIB}.ipkg
+exe:
+	${IDRIS} ${OPTS} --build ${EXE}.ipkg
 
 clean:
-	${IDRIS} --clean ${LIB}.ipkg
+	${IDRIS} --clean ${EXE}.ipkg
 	find . -name "*~" -delete
 
 clobber: clean
 	find . -name "*.ibc" -delete
 
 check: clobber
-	${IDRIS} --checkpkg ${LIB}.ipkg
+	${IDRIS} --checkpkg ${EXE}.ipkg
 
 doc:
-	${IDRIS} --mkdoc ${LIB}.ipkg
+	${IDRIS} --mkdoc ${EXE}.ipkg

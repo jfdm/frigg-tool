@@ -11,13 +11,12 @@ import Lightyear.Strings
 
 import Freyja.Convert
 
-%access public
-
 word : Parser String
 word = lexeme (map pack $ some (alphaNum) ) <?> "Identity"
 
 -- ---------------------------------------------------------------- [ Commands ]
 
+public export
 data DisplayPattern = All
                     | Summary
                     | MData
@@ -28,6 +27,7 @@ data DisplayPattern = All
                     | Studies
                     | Related
 
+public export
 data EvalPattern : Type where
   EvalAll     : EvalPattern
   Readability : EvalPattern
@@ -35,7 +35,7 @@ data EvalPattern : Type where
 --  SolutionApp : EvalPattern
   SifModel    : EvalPattern
 
-public
+public export
 data FriggCMD : Type where
   Query   : String -> FriggCMD
   Display : DisplayPattern  -> FriggCMD
@@ -44,6 +44,7 @@ data FriggCMD : Type where
   Quit : FriggCMD
   Help : FriggCMD
 
+export
 showHelp : String
 showHelp = """
 Command                 | Description
@@ -64,7 +65,7 @@ Command                 | Description
 :? :help                | Show this help
 """
 
-private
+
 display : Parser FriggCMD
 display = do
       string ":display"
@@ -85,7 +86,6 @@ display = do
               <|> (string "related"  *> return Related)
 
 
-private
 convert : Parser FriggCMD
 convert = do
     string ":convert"
@@ -100,7 +100,6 @@ convert = do
         Just fmt => pure fmt
         Nothing  => fail "Expected out format"
 
-private
 evaluate : Parser FriggCMD
 evaluate = do
     string ":evaluate"
@@ -114,7 +113,6 @@ evaluate = do
          <|> (string "template" *> return TemplateAd)
          <|> (string "all"      *> return EvalAll)
 
-private
 query : Parser FriggCMD
 query = do
     string ":query"
@@ -122,13 +120,11 @@ query = do
     qStr <- quoted '"'
     pure $ Query qStr
 
-private
 quit : Parser FriggCMD
 quit = (string ":quit" *> return Quit)
    <|> (string ":q"    *> return Quit)
    <|> (string ":exit" *> return Quit)
 
-private
 help : Parser FriggCMD
 help = (string ":?"    *> return Help)
    <|> (string ":help" *> return Help)
@@ -142,7 +138,7 @@ cmd = convert
   <|> help
   <?> "Command"
 
-public
+export
 parseCMD : String -> Either String FriggCMD
 parseCMD s = parse cmd s
 

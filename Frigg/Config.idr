@@ -22,34 +22,34 @@ import Frigg.Effs
 -- -------------------------------------------------------------- [ Directives ]
 
 %default partial
-%access public
+%access export
 
 -- ------------------------------------------------------------------- [ Begin ]
 
-getMappings : INIElem -> Dict String Float
+getMappings : INIElem -> Dict String Double
 getMappings (INIFile is) =
     Dict.fromList $ catMaybes $ map getMap is
   where
-    getMap : INIElem -> Maybe (String, Float)
+    getMap : INIElem -> Maybe (String, Double)
     getMap (INIFile is)       = Nothing
     getMap (INISection t kvs) = Nothing
     getMap (INIEntry k v)     =
-      let val = (the (Float) (cast v)) in
+      let val = (the (Double) (cast v)) in
         case val < 0 of
           True  => Nothing
           False => Just (toLower k, val)
 
-getConfig : Maybe String -> Frigg (Dict String Float)
+getConfig : Maybe String -> Frigg (Dict String Double)
 getConfig Nothing   = pure empty
 getConfig (Just fn) =
   case !(readINIConfig fn) of
     Left  err => pure empty
     Right res => pure $ getMappings res
 
-getTemplateWeightings : Frigg (Dict String Float)
+getTemplateWeightings : Frigg (Dict String Double)
 getTemplateWeightings = getConfig $ weights !getOptions
 
-getGradingScale : Eff (Dict String Float) FriggEffs
+getGradingScale : Eff (Dict String Double) FriggEffs
 getGradingScale = getConfig $ gscale !getOptions
 
 -- --------------------------------------------------------------------- [ EOF ]

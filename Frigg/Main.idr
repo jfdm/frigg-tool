@@ -40,6 +40,7 @@ friggMain = do
   loadPatternDoc (patt o)
   execMode (mode o)
 
+export
 main : IO ()
 main = do
   run $ friggMain

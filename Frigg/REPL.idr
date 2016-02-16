@@ -68,7 +68,7 @@ runREPL = do
         runREPL
 
 ||| A Viewer to view a library of patterns.
-public
+export
 friggREPL : Frigg ()
 friggREPL =
   case banner !(getOptions) of

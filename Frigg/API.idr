@@ -31,7 +31,7 @@ import Frigg.Error
 import Frigg.Eval
 import Frigg.Commands
 
-
+%access export
 
 loadPatternDoc : Maybe String -> Frigg ()
 loadPatternDoc Nothing   = Frigg.raise FileExpected
